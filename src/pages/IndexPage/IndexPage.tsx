@@ -6,24 +6,14 @@ import { MiniApp } from '@tma.js/sdk';
 import { Page } from '~/components/Page/Page.tsx';
 
 import './IndexPage.css';
+import { useMiniApp } from '@tma.js/sdk-react';
 
 
 type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-const miniApp = new MiniApp({
-  backgroundColor: '#000040',
-  headerColor: '#000040',
-  botInline: false,
-  version: '7.0.0',
-  postEvent: (event: string, data: any) => {
-    console.log(event, data);
-  },
-  createRequestId: () => {
-    return '123';
-  }
-});
+const miniApp: MiniApp = useMiniApp();
 
 // interface Register {
 //   id: string;
@@ -49,7 +39,8 @@ export const IndexPage: FC = () => {
   //   return initData && initData.user ? getUserRows(initData.user) : undefined;
   // }, [initData]);
 
-  miniApp.sendData('hello');
+  miniApp.sendData('Hello from MiniApp!')
+  
 
   return (
     <Page title="Home Page">
