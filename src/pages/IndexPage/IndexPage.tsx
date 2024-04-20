@@ -33,14 +33,18 @@ const miniApp: MiniApp = useMiniApp();
 
 export const IndexPage: FC = () => {
   // const initData = useInitData();
-  const [value, onChange] = useState<Value>(new Date());
+  // const [value, onChange] = useState<Value>(new Date());
 
   // const userRows = useMemo<Register | undefined>(() => {
   //   return initData && initData.user ? getUserRows(initData.user) : undefined;
   // }, [initData]);
 
-  miniApp.sendData('Hello from MiniApp!')
   
+
+  function onChange(value: Value, event: React.MouseEvent<HTMLButtonElement>) {
+    console.log(value);
+    miniApp.sendData('Hello from MiniApp!')
+  }
 
   return (
     <Page title="Home Page">
@@ -48,7 +52,7 @@ export const IndexPage: FC = () => {
         This page is a home page in this boilerplate. You can use the links below to visit other
         pages with their own functionality.
       </p>
-      <Calendar onChange={onChange} value={value} />
+      <Calendar onChange={onChange} />
     </Page>
   );
 };
