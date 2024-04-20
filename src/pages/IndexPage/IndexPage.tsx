@@ -38,7 +38,7 @@ export const IndexPage: FC = () => {
   // }, [initData]);
 
   const miniApp = useMiniApp();
-  console.log(miniApp.isBotInline);
+  console.log('index' + miniApp.isRequestingPhoneAccess);
 
 
   function onChange(value: Value) {
