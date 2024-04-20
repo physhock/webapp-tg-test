@@ -2,7 +2,7 @@ import { type FC, useState } from 'react';
 // import { useInitData } from '@tma.js/sdk-react';
 import { Calendar } from 'react-calendar';
 
-// import { User, MiniApp } from '@tma.js/sdk';
+import { MiniApp } from '@tma.js/sdk';
 import { Page } from '~/components/Page/Page.tsx';
 
 import './IndexPage.css';
@@ -11,6 +11,19 @@ import './IndexPage.css';
 type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
+
+const miniApp = new MiniApp({
+  backgroundColor: '#000040',
+  headerColor: '#000040',
+  botInline: false,
+  version: '7.0.0',
+  postEvent: (event: string, data: any) => {
+    console.log(event, data);
+  },
+  createRequestId: () => {
+    return '123';
+  }
+});
 
 // interface Register {
 //   id: string;
@@ -35,6 +48,8 @@ export const IndexPage: FC = () => {
   // const userRows = useMemo<Register | undefined>(() => {
   //   return initData && initData.user ? getUserRows(initData.user) : undefined;
   // }, [initData]);
+
+  miniApp.sendData('hello');
 
   return (
     <Page title="Home Page">
