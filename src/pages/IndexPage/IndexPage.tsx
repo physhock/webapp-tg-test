@@ -1,4 +1,4 @@
-import { type FC, useState } from 'react';
+import { type FC } from 'react';
 // import { useInitData } from '@tma.js/sdk-react';
 import { Calendar } from 'react-calendar';
 
@@ -41,7 +41,7 @@ export const IndexPage: FC = () => {
 
   
 
-  function onChange(value: Value, event: React.MouseEvent<HTMLButtonElement>) {
+  function onChange(value: Value) {
     console.log(value);
     miniApp.sendData('Hello from MiniApp!')
   }
