@@ -42,8 +42,7 @@ export const IndexPage: FC = () => {
 
 
   function onChange(value: Value) {
-    console.log(value);
-    miniApp.sendData('Hello from MiniApp!')
+    miniApp.sendData(value?.toString() || '');
   }
 
   return (
