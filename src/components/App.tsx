@@ -3,7 +3,7 @@ import {
   useBackButtonIntegration,
   useNavigatorIntegration,
 } from '@tma.js/react-router-integration';
-import { useBackButton } from '@tma.js/sdk-react';
+import { useBackButton, useMiniApp } from '@tma.js/sdk-react';
 import { type FC, useMemo } from 'react';
 import {
   Navigate,
@@ -18,6 +18,8 @@ export const App: FC = () => {
   const tmaNavigator = useMemo(createNavigator, []);
   const [location, navigator] = useNavigatorIntegration(tmaNavigator);
   const backButton = useBackButton();
+  const miniApp = useMiniApp();
+  console.log(miniApp.isBotInline);
 
   useBackButtonIntegration(tmaNavigator, backButton);
 

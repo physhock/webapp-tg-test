@@ -5,7 +5,7 @@ import { Calendar } from 'react-calendar';
 import { Page } from '~/components/Page/Page.tsx';
 
 import './IndexPage.css';
-import { useMiniApp } from '@tma.js/sdk-react';
+// import { useMiniApp } from '@tma.js/sdk-react';
 
 
 type ValuePiece = Date | null;
@@ -40,7 +40,7 @@ export const IndexPage: FC = () => {
 
   function onChange(value: Value) {
     console.log(value);
-    useMiniApp().sendData('Hello from MiniApp!')
+    // useMiniApp().sendData('Hello from MiniApp!')
   }
 
   return (
