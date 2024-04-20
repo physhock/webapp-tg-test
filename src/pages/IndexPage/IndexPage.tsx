@@ -2,7 +2,6 @@ import { type FC } from 'react';
 // import { useInitData } from '@tma.js/sdk-react';
 import { Calendar } from 'react-calendar';
 
-import { MiniApp } from '@tma.js/sdk';
 import { Page } from '~/components/Page/Page.tsx';
 
 import './IndexPage.css';
@@ -12,8 +11,6 @@ import { useMiniApp } from '@tma.js/sdk-react';
 type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
-
-const miniApp: MiniApp = useMiniApp();
 
 // interface Register {
 //   id: string;
@@ -39,11 +36,11 @@ export const IndexPage: FC = () => {
   //   return initData && initData.user ? getUserRows(initData.user) : undefined;
   // }, [initData]);
 
-  
+
 
   function onChange(value: Value) {
     console.log(value);
-    miniApp.sendData('Hello from MiniApp!')
+    useMiniApp().sendData('Hello from MiniApp!')
   }
 
   return (
