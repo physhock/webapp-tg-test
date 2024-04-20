@@ -5,6 +5,7 @@ import { Calendar } from 'react-calendar';
 import { Page } from '~/components/Page/Page.tsx';
 
 import './IndexPage.css';
+import { useMiniApp } from '@tma.js/sdk-react';
 // import { useMiniApp } from '@tma.js/sdk-react';
 
 
@@ -36,6 +37,8 @@ export const IndexPage: FC = () => {
   //   return initData && initData.user ? getUserRows(initData.user) : undefined;
   // }, [initData]);
 
+  const miniApp = useMiniApp();
+  console.log(miniApp.isBotInline);
 
 
   function onChange(value: Value) {
