@@ -3,7 +3,7 @@ import {
   useBackButtonIntegration,
   useNavigatorIntegration,
 } from '@tma.js/react-router-integration';
-import { useBackButton, useMiniApp } from '@tma.js/sdk-react';
+import { useBackButton } from '@tma.js/sdk-react';
 import { type FC, useMemo } from 'react';
 import {
   Navigate,
