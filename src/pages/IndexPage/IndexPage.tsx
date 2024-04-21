@@ -50,6 +50,7 @@ export const IndexPage: FC = () => {
 
 
   const userRows = useMemo<Register | undefined>(() => {
+    console.log('initData: ' + initData);
     return initData && initData.user ? getUserRows(initData.user) : undefined;
   }, [initData]);
 
