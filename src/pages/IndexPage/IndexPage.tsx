@@ -84,6 +84,7 @@ export const IndexPage: FC = () => {
           <>
             <Calendar onChange={onChange} value={date} tileDisabled={tileDisabled} />
             <button onClick={() => {
+              console.log('date: ' + date + ' userRows: ' + userRows);
               if (date && userRows) { // Add null check for userRows
                 userRows.fighter = chosenFighter;
                 userRows.date = date.toString();
