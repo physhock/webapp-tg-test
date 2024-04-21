@@ -1,11 +1,10 @@
-import { useMemo, useState, type FC } from 'react';
+import { useState, type FC } from 'react';
 import { Calendar } from 'react-calendar';
 
 import { Page } from '~/components/Page/Page.tsx';
 
 import './IndexPage.css';
-import { useInitData, useInitDataRaw, useMiniApp } from '@tma.js/sdk-react';
-import { User } from '@tma.js/sdk';
+import { useMiniApp, } from '@tma.js/sdk-react';
 
 
 
@@ -26,37 +25,27 @@ interface Register {
   fighter: string;
 }
 
-function getUserRows(user: User): Register {
-  return {
-    id: user.id.toString(),
-    name: user.firstName + ' ' + user.lastName,
-    phone: '',
-    date: '',
-    fighter: ''
-  }
-}
-
 function isSameDay(dDate: string, date: Date): boolean {
   return new Date(dDate).getDate() === date.getDate() && new Date(dDate).getMonth() === date.getMonth() && new Date(dDate).getFullYear() === date.getFullYear();
 }
 
-
 export const IndexPage: FC = () => {
+  const [userRegister, setRegister] = useState<Register | null>(null);
   const [chosenFighter, setChosenFighter] = useState<string>('');
   const [date, onChange] = useState<Value>(new Date());
   const miniApp = useMiniApp();
   console.log('index' + miniApp.isRequestingPhoneAccess);
 
-
-  
-  const initData = useInitData();
-  const initDataRaw = useInitDataRaw();
-
-  console.log('initData: ' + initData + ' initDataRaw: ' + initDataRaw);
-
-  const userRows = useMemo<Register | undefined>(() => {
-    return initData && initData.user ? getUserRows(initData.user) : undefined;
-  }, [initData]);
+  miniApp.requestContact().then((contact) => {
+    let user: Register = {
+      id: contact.contact.userId.toString(),
+      name: contact.contact.firstName + contact.contact.lastName,
+      phone: contact.contact.phoneNumber,
+      date: '',
+      fighter: ''
+    }
+    setRegister(user);
+  });
 
   function createButton() {
     const fighters = Array.from(mapFighterToDates.keys());
@@ -79,7 +68,7 @@ export const IndexPage: FC = () => {
   return (
     <Page title="Barbershop">
       <p>
-        Hello, {userRows?.name}, welcome to the Barbershop! Choose a fighter to book an appointment with:
+        Hello, {userRegister?.name}, welcome to the Barbershop! Choose a fighter to book an appointment with:
       </p>
       <div>
         {createButton()}
@@ -87,11 +76,11 @@ export const IndexPage: FC = () => {
           <>
             <Calendar onChange={onChange} value={date} tileDisabled={tileDisabled} />
             <button onClick={() => {
-              console.log('date: ' + date + ' userRows: ' + userRows);
-              if (date && userRows) { // Add null check for userRows
-                userRows.fighter = chosenFighter;
-                userRows.date = date.toString();
-                miniApp.sendData(JSON.stringify(userRows)); // Convert userRows to JSON string
+
+              if (date && userRegister) { // Add null check for userRows
+                userRegister.fighter = chosenFighter;
+                userRegister.date = date.toString();
+                miniApp.sendData(JSON.stringify(userRegister)); // Convert userRows to JSON string
               }
             }}>'Book an appointment'</button>
           </>
