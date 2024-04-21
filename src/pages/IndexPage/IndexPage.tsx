@@ -4,7 +4,7 @@ import { Calendar } from 'react-calendar';
 import { Page } from '~/components/Page/Page.tsx';
 
 import './IndexPage.css';
-import { useInitData, useInitDataRaw, useMiniApp } from '@tma.js/sdk-react';
+import { useInitData, useInitDataRaw } from '@tma.js/sdk-react';
 import { User } from '@tma.js/sdk';
 
 
@@ -44,8 +44,11 @@ function isSameDay(dDate: string, date: Date): boolean {
 export const IndexPage: FC = () => {
   const [chosenFighter, setChosenFighter] = useState<string>('');
   const [date, onChange] = useState<Value>(new Date());
-  const miniApp = useMiniApp();
-  console.log('index' + miniApp.isRequestingPhoneAccess);
+  // const miniApp = useMiniApp();
+  // console.log('index' + miniApp.isRequestingPhoneAccess);
+  // miniApp.requestContact();
+
+  
   const initData = useInitData();
   const initDataRaw = useInitDataRaw();
 
@@ -73,8 +76,6 @@ export const IndexPage: FC = () => {
     return false;
   }
 
-
-
   return (
     <Page title="Barbershop">
       <p>
@@ -90,7 +91,7 @@ export const IndexPage: FC = () => {
               if (date && userRows) { // Add null check for userRows
                 userRows.fighter = chosenFighter;
                 userRows.date = date.toString();
-                miniApp.sendData(JSON.stringify(userRows)); // Convert userRows to JSON string
+                // miniApp.sendData(JSON.stringify(userRows)); // Convert userRows to JSON string
               }
             }}>'Book an appointment'</button>
           </>
