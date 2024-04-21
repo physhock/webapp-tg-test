@@ -3,7 +3,7 @@ import {
   useBackButtonIntegration,
   useNavigatorIntegration,
 } from '@tma.js/react-router-integration';
-import { useBackButton } from '@tma.js/sdk-react';
+import { useBackButton, useInitData, useInitDataRaw } from '@tma.js/sdk-react';
 import { type FC, useMemo } from 'react';
 import {
   Navigate,
@@ -20,6 +20,11 @@ export const App: FC = () => {
   const backButton = useBackButton();
 
   useBackButtonIntegration(tmaNavigator, backButton);
+
+  const initData = useInitData();
+  const initDataRaw = useInitDataRaw();
+
+  console.log('initData: ' + initData + ' initDataRaw: ' + initDataRaw);
 
   return (
     <Router location={location} navigator={navigator}>
