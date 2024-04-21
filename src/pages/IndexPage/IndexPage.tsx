@@ -67,14 +67,13 @@ export const IndexPage: FC = () => {
     })
   }
 
-  function tileContent({ date, view }: { date: Date, view: string }) {
+  function tileDisabled({ date, view }: { date: Date, view: string }) {
     // Add class to tiles in month view only
     if (view === 'month') {
-      // Check if a date React-Calendar wants to check is on the list of dates to add class to
-      if (mapFighterToDates.get(chosenFighter)?.find(dDate => isSameDay(dDate, date))) {
-        return 'My content';
-      }
+      // Check if a date React-Calendar matches with the date in the map
+      return mapFighterToDates.get(chosenFighter)?.some((dDate) => isSameDay(dDate, date)) ? false : true;
     }
+    return false;
   }
 
   return (
@@ -83,13 +82,9 @@ export const IndexPage: FC = () => {
         This page is a home page in this boilerplate. You can use the links below to visit other
         pages with their own functionality.
       </p>
-
-      <div>
-        {createButton()}
-      </div>
-
+      <div>{createButton()}</div>
       {chosenFighter !== '' ? (
-        <Calendar onChange={onChange} value={date} tileContent={tileContent} />
+        <Calendar onChange={onChange} value={date} tileDisabled={tileDisabled} />
       ) : null}
 
     </Page>
