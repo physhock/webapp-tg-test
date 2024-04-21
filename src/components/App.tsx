@@ -18,8 +18,6 @@ export const App: FC = () => {
   const tmaNavigator = useMemo(createNavigator, []);
   const [location, navigator] = useNavigatorIntegration(tmaNavigator);
   const backButton = useBackButton();
-  // const miniApp = useMiniApp();
-  // console.log('app' + miniApp.isBotInline);
 
   useBackButtonIntegration(tmaNavigator, backButton);
 
