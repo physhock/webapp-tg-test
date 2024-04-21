@@ -1,19 +1,24 @@
 import { useState, type FC } from 'react';
-// import { useInitData } from '@tma.js/sdk-react';
 import { Calendar } from 'react-calendar';
 
 import { Page } from '~/components/Page/Page.tsx';
 
 import './IndexPage.css';
 import { useMiniApp } from '@tma.js/sdk-react';
-// import { useMiniApp } from '@tma.js/sdk-react';
+
 
 
 type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-const fighters = ['Conor McGregor', 'Khabib Nurmagomed', 'Fedor Emelianenko']
+
+const mapFighterToDates: Map<string, Array<string>> = new Map([
+  ['Conor McGregor', ['2024-04-20', '2024-04-19', '2024-04-15']],
+  ['Khabib Nurmagomed', ['2024-04-23', '2024-04-17', '2024-04-11']],
+  ['Fedor Emelianenko', ['2024-04-24', '2024-04-14', '2024-04-13']]
+])
+
 
 // interface Register {
 //   id: string;
@@ -32,29 +37,44 @@ const fighters = ['Conor McGregor', 'Khabib Nurmagomed', 'Fedor Emelianenko']
 // }
 
 
+
+
+function isSameDay(dDate: string, date: Date): boolean {
+  console.log(date, dDate);
+  return new Date(dDate).getDate() === date.getDate() && new Date(dDate).getMonth() === date.getMonth() && new Date(dDate).getFullYear() === date.getFullYear();
+}
+
+
 export const IndexPage: FC = () => {
   const [chosenFighter, setChosenFighter] = useState<string>('');
-  // const initData = useInitData();
-  // const [value, onChange] = useState<Value>(new Date());
+  const [date, onChange] = useState<Value>(new Date());
 
-  // const userRows = useMemo<Register | undefined>(() => {
-  //   return initData && initData.user ? getUserRows(initData.user) : undefined;
-  // }, [initData]);
 
   const miniApp = useMiniApp();
   console.log('index' + miniApp.isRequestingPhoneAccess);
 
 
-  function onChange(value: Value) {
-    miniApp.sendData(value?.toString() || '');
-  }
+  // function onChange(value: Value) {
+  //   miniApp.sendData(value?.toString() || '');
+  // }
 
   function createButton() {
+    const fighters = Array.from(mapFighterToDates.keys());
     return fighters.map((fighter) => {
       return (
         <button onClick={() => setChosenFighter(fighter)}>{fighter}</button>
       )
     })
+  }
+
+  function tileContent({ date, view }: { date: Date, view: string }) {
+    // Add class to tiles in month view only
+    if (view === 'month') {
+      // Check if a date React-Calendar wants to check is on the list of dates to add class to
+      if (mapFighterToDates.get(chosenFighter)?.find(dDate => isSameDay(dDate, date))) {
+        return 'My content';
+      }
+    }
   }
 
   return (
@@ -69,9 +89,11 @@ export const IndexPage: FC = () => {
       </div>
 
       {chosenFighter !== '' ? (
-        <Calendar onChange={onChange} />
-      ) : null }
+        <Calendar onChange={onChange} value={date} tileContent={tileContent} />
+      ) : null}
 
     </Page>
   );
 };
+
+
