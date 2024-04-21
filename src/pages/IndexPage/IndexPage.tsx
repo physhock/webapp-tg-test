@@ -68,8 +68,10 @@ export const IndexPage: FC = () => {
         {createButton()}
       </div>
 
+      {chosenFighter !== '' ? (
+        <Calendar onChange={onChange} />
+      ) : null }
 
-      <Calendar onChange={onChange} />
     </Page>
   );
 };
