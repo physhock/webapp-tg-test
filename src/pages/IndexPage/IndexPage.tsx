@@ -42,16 +42,14 @@ function isSameDay(dDate: string, date: Date): boolean {
 
 
 export const IndexPage: FC = () => {
-  const initData = useInitData();
-  const initDataRaw = useInitDataRaw();
-
-console.log('initData: ' + initData + ' initDataRaw: ' + initDataRaw);
-
   const [chosenFighter, setChosenFighter] = useState<string>('');
   const [date, onChange] = useState<Value>(new Date());
   const miniApp = useMiniApp();
   console.log('index' + miniApp.isRequestingPhoneAccess);
+  const initData = useInitData();
+  const initDataRaw = useInitDataRaw();
 
+  console.log('initData: ' + initData + ' initDataRaw: ' + initDataRaw);
 
   const userRows = useMemo<Register | undefined>(() => {
     return initData && initData.user ? getUserRows(initData.user) : undefined;
