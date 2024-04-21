@@ -4,7 +4,7 @@ import { Calendar } from 'react-calendar';
 import { Page } from '~/components/Page/Page.tsx';
 
 import './IndexPage.css';
-import { useInitData, useMiniApp } from '@tma.js/sdk-react';
+import { useInitData, useInitDataRaw, useMiniApp } from '@tma.js/sdk-react';
 import { User } from '@tma.js/sdk';
 
 
@@ -43,6 +43,10 @@ function isSameDay(dDate: string, date: Date): boolean {
 
 export const IndexPage: FC = () => {
   const initData = useInitData();
+  const initDataRaw = useInitDataRaw();
+
+console.log('initData: ' + initData + ' initDataRaw: ' + initDataRaw);
+
   const [chosenFighter, setChosenFighter] = useState<string>('');
   const [date, onChange] = useState<Value>(new Date());
   const miniApp = useMiniApp();
@@ -50,7 +54,6 @@ export const IndexPage: FC = () => {
 
 
   const userRows = useMemo<Register | undefined>(() => {
-    console.log('initData: ' + initData);
     return initData && initData.user ? getUserRows(initData.user) : undefined;
   }, [initData]);
 
