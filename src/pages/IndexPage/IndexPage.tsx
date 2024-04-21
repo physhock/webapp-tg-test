@@ -7,7 +7,6 @@ import './IndexPage.css';
 import { useMiniApp, } from '@tma.js/sdk-react';
 
 
-
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
@@ -39,7 +38,7 @@ export const IndexPage: FC = () => {
   miniApp.requestContact().then((contact) => {
     let user: Register = {
       id: contact.contact.userId.toString(),
-      name: contact.contact.firstName + contact.contact.lastName,
+      name: contact.contact.firstName + (contact.contact?.lastName ? " " + contact.contact.lastName : ""),
       phone: contact.contact.phoneNumber,
       date: '',
       fighter: ''
@@ -66,27 +65,29 @@ export const IndexPage: FC = () => {
   }
 
   return (
-    <Page title="Barbershop">
-      <p>
-        Hello, {userRegister?.name}, welcome to the Barbershop! Choose a fighter to book an appointment with:
-      </p>
-      <div>
-        {createButton()}
-        {chosenFighter !== '' ? (
-          <>
-            <Calendar onChange={onChange} value={date} tileDisabled={tileDisabled} />
-            <button onClick={() => {
+    userRegister ? (
+      <Page title="Barbershop">
+        <p>
+          Hello, {userRegister.name}, welcome to the Barbershop! Choose a fighter to book an appointment with:
+        </p>
+        <div>
+          {createButton()}
+          {chosenFighter !== '' ? (
+            <>
+              <Calendar onChange={onChange} value={date} tileDisabled={tileDisabled} />
+              <button onClick={() => {
 
-              if (date && userRegister) { // Add null check for userRows
-                userRegister.fighter = chosenFighter;
-                userRegister.date = date.toString();
-                miniApp.sendData(JSON.stringify(userRegister)); // Convert userRows to JSON string
-              }
-            }}>'Book an appointment'</button>
-          </>
-        ) : null}
-      </div>
-    </Page>
+                if (date) {
+                  userRegister.fighter = chosenFighter;
+                  userRegister.date = date.toString();
+                  miniApp.sendData(JSON.stringify(userRegister));
+                }
+              }}>'Book an appointment'</button>
+            </>
+          ) : null}
+        </div>
+      </Page>
+    ) : null
   );
 };
 
